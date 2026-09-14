@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NN Sourcing | Custom Towel Supplier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F1ECE3;
+    --panel: #EAE3D5;
+    --ink: #24211B;
+    --ink-soft: #6B6558;
+    --line: #D8CFBE;
+    --accent: #3E5C55;
+    --accent-soft: #E4E9E5;
+    --danger: #A34A3F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:88px 24px 56px;
+    text-align:center;
+    max-width:680px;
+    margin:0 auto;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(38px, 6vw, 58px);
+    letter-spacing:-0.01em;
+    margin:0 0 6px;
+  }
+  .hero .tagline{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:19px;
+    color:var(--ink-soft);
+    margin:0 0 28px;
+  }
+  .hero .role{
+    font-size:15.5px;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin:0 auto 36px;
+  }
+  .features{
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:0;
+    margin:0;
+    padding:0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .features li{
+    padding:14px 18px;
+    font-size:13.5px;
+    color:var(--ink);
+    border-left:1px solid var(--line);
+  }
+  .features li:first-child{border-left:none;}
+
+  /* ---------- Products ---------- */
+  .products{padding:64px 24px 40px;}
+  .products-header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    max-width:1080px;
+    margin:0 auto 28px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+  }
+  .products-header h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:9px 16px;
+    cursor:pointer;
+    transition:opacity .15s ease;
+  }
+  .btn:hover{opacity:.88;}
+  .btn.secondary{
+    background:transparent;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+  .btn.ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+  .btn.danger{background:var(--danger);}
+  .hidden{display:none !important;}
+
+  .product-grid{
+    max-width:1080px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:36px 28px;
+  }
+  .card{position:relative;}
+  .card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    background:var(--panel);
+    display:block;
+  }
+  .card .thumb.placeholder{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-soft);font-size:13px;
+  }
+  .card .meta{
+    border-top:1px solid var(--line);
+    padding-top:10px;
+    margin-top:12px;
+  }
+  .card .name{font-size:15px;font-weight:500;margin:0 0 4px;}
+  .card .price{font-size:14px;color:var(--accent);font-weight:500;margin:0 0 6px;}
+  .card .details{font-size:13px;color:var(--ink-soft);white-space:pre-line;margin:0;}
+  .card .card-admin{
+    position:absolute;top:8px;right:8px;
+    display:flex;gap:6px;
+  }
+  .icon-btn{
+    width:28px;height:28px;
+    background:rgba(255,255,255,.92);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:13px;
+  }
+  .empty-state{
+    text-align:center;color:var(--ink-soft);font-size:14px;
+    padding:40px 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:40px 24px 60px;
+    text-align:center;
+  }
+  .edit-toolbar{
+    max-width:1080px;margin:0 auto 24px;
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  }
+  .footnote{font-size:12px;color:var(--ink-soft);}
+
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(36,33,27,.45);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;z-index:50;
+  }
+  .modal{
+    background:var(--bg);
+    max-width:440px;width:100%;
+    max-height:88vh;overflow-y:auto;
+    padding:28px;
+    border:1px solid var(--line);
+  }
+  .modal h3{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:20px;margin:0 0 20px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;
+  }
+  .field input[type=text], .field input[type=password], .field textarea{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+  .field input:focus, .field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .modal-actions{
+    display:flex;justify-content:flex-end;gap:10px;margin-top:22px;
+  }
+  .modal-error{color:var(--danger);font-size:13px;margin:-8px 0 14px;}
+  .thumb-preview{
+    width:100%;aspect-ratio:1/1;object-fit:cover;
+    border:1px solid var(--line);margin-top:8px;background:var(--panel);
+  }
+  .loading{text-align:center;padding:60px 0;color:var(--ink-soft);font-size:14px;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <h1 id="site-name">NN Sourcing</h1>
+    <p class="tagline" id="site-tagline">Custom Towel Supplier</p>
+    <p class="role" id="site-role">Independent sourcing partner working across multiple towel factories — an overseas, on-the-ground extension of your business for direct, reliable manufacturing.</p>
+    <ul class="features" id="features-list"></ul>
+  </header>
+
+  <section class="products">
+    <div class="products-header">
+      <h2>Products</h2>
+      <button class="btn hidden" id="add-product-btn">Add product</button>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+    <p class="empty-state hidden" id="empty-state">No products yet.</p>
+    <p class="loading" id="loading-state">Loading…</p>
+  </section>
+
+  <footer>
+    <div class="edit-toolbar" id="edit-toolbar">
+      <button class="btn ghost" id="edit-site-btn" style="display:none" data-role="edit-site">Edit page text</button>
+    </div>
+    <button class="btn ghost" id="edit-toggle">Edit site</button>
+    <p class="footnote">© <span id="year"></span> NN Sourcing</p>
+  </footer>
+</div>
+
+<!-- Password modal -->
+<div class="modal-overlay hidden" id="password-overlay">
+  <div class="modal">
+    <h3>Enter edit password</h3>
+    <p class="modal-error hidden" id="password-error">Incorrect password.</p>
+    <div class="field">
+      <label for="password-input">Password</label>
+      <input type="password" id="password-input" autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close="password-overlay">Cancel</button>
+      <button class="btn" id="password-submit">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Site content edit modal -->
+<div class="modal-overlay hidden" id="content-overlay">
+  <div class="modal">
+    <h3>Edit page text</h3>
+    <div class="field"><label>Name</label><input type="text" id="input-name"></div>
+    <div class="field"><label>Tagline</label><input type="text" id="input-tagline"></div>
+    <div class="field"><label>Role description</label><textarea id="input-role"></textarea></div>
+    <div class="field"><label>Feature 1</label><input type="text" id="input-f0"></div>
+    <div class="field"><label>Feature 2</label><input type="text" id="input-f1"></div>
+    <div class="field"><label>Feature 3</label><input type="text" id="input-f2"></div>
+    <div class="field"><label>Feature 4</label><input type="text" id="input-f3"></div>
+    <div class="field"><label>Feature 5</label><input type="text" id="input-f4"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close="content-overlay">Cancel</button>
+      <button class="btn" id="content-save">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Product edit modal -->
+<div class="modal-overlay hidden" id="product-overlay">
+  <div class="modal">
+    <h3 id="product-modal-title">Add product</h3>
+    <div class="field">
+      <label>Photo</label>
+      <input type="file" id="input-image" accept="image/*">
+      <img class="thumb-preview hidden" id="image-preview">
+    </div>
+    <div class="field"><label>Name</label><input type="text" id="input-p-name"></div>
+    <div class="field"><label>Price</label><input type="text" id="input-p-price" placeholder="e.g. $2.80 / pc, MOQ 500 pcs"></div>
+    <div class="field"><label>Details</label><textarea id="input-p-details" placeholder="Material, size, GSM, colors, packaging…"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close="product-overlay">Cancel</button>
+      <button class="btn" id="product-save">Save product</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var EDIT_PASSWORD = "nntowel2026"; // change this string to set your own edit password
+  var editMode = false;
+  var editingProductId = null;
+  var pendingImageData = null;
+
+  var defaultContent = {
+    name: "NN Sourcing",
+    tagline: "Custom Towel Supplier",
+    role: "Independent sourcing partner working across multiple towel factories — an overseas, on-the-ground extension of your business for direct, reliable manufacturing.",
+    features: ["Low MOQ", "Fast sampling", "Flexible customization", "Direct factory pricing", "Worldwide shipping"]
+  };
+  var content = JSON.parse(JSON.stringify(defaultContent));
+  var products = [];
+
+  function $(id){ return document.getElementById(id); }
+
+  function openModal(id){ $(id).classList.remove('hidden'); }
+  function closeModal(id){ $(id).classList.add('hidden'); }
+
+  document.querySelectorAll('[data-close]').forEach(function(btn){
+    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); });
+  });
+
+  // ---------- render ----------
+  function renderContent(){
+    $('site-name').textContent = content.name;
+    $('site-tagline').textContent = content.tagline;
+    $('site-role').textContent = content.role;
+    var list = $('features-list');
+    list.innerHTML = '';
+    content.features.filter(Boolean).forEach(function(f){
+      var li = document.createElement('li');
+      li.textContent = f;
+      list.appendChild(li);
+    });
+  }
+
+  function renderProducts(){
+    var grid = $('product-grid');
+    grid.innerHTML = '';
+    $('empty-state').classList.toggle('hidden', products.length > 0);
+    products.forEach(function(p){
+      var card = document.createElement('div');
+      card.className = 'card';
+
+      var img;
+      if (p.image) {
+        img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = p.image;
+        img.alt = p.name || 'Towel product';
+      } else {
+        img = document.createElement('div');
+        img.className = 'thumb placeholder';
+        img.textContent = 'No photo';
+      }
+      card.appendChild(img);
+
+      if (editMode) {
+        var admin = document.createElement('div');
+        admin.className = 'card-admin';
+        var editBtn = document.createElement('button');
+        editBtn.className = 'icon-btn';
+        editBtn.title = 'Edit';
+        editBtn.textContent = '✎';
+        editBtn.addEventListener('click', function(){ openProductModal(p); });
+        var delBtn = document.createElement('button');
+        delBtn.className = 'icon-btn';
+        delBtn.title = 'Delete';
+        delBtn.textContent = '✕';
+        delBtn.addEventListener('click', function(){ deleteProduct(p.id); });
+        admin.appendChild(editBtn);
+        admin.appendChild(delBtn);
+        card.appendChild(admin);
+      }
+
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      var name = document.createElement('p');
+      name.className = 'name';
+      name.textContent = p.name || 'Untitled';
+      var price = document.createElement('p');
+      price.className = 'price';
+      price.textContent = p.price || '';
+      var details = document.createElement('p');
+      details.className = 'details';
+      details.textContent = p.details || '';
+      meta.appendChild(name);
+      if (p.price) meta.appendChild(price);
+      if (p.details) meta.appendChild(details);
+      card.appendChild(meta);
+
+      grid.appendChild(card);
+    });
+  }
+
+  function renderAdminUI(){
+    $('add-product-btn').classList.toggle('hidden', !editMode);
+    document.querySelector('[data-role="edit-site"]').style.display = editMode ? 'inline-block' : 'none';
+    $('edit-toggle').textContent = editMode ? 'Exit edit mode' : 'Edit site';
+  }
+
+  // ---------- storage ----------
+  async function loadData(){
+    try {
+      var c = await window.storage.get('site-content', true);
+      if (c && c.value) content = JSON.parse(c.value);
+    } catch(e) { /* use defaults */ }
+    try {
+      var p = await window.storage.get('products', true);
+      if (p && p.value) products = JSON.parse(p.value);
+    } catch(e) { products = []; }
+    renderContent();
+    renderProducts();
+    $('loading-state').classList.add('hidden');
+  }
+
+  async function saveContent(){
+    try {
+      await window.storage.set('site-content', JSON.stringify(content), true);
+    } catch(e){ alert('Could not save page text. Please try again.'); }
+  }
+
+  async function saveProducts(){
+    try {
+      await window.storage.set('products', JSON.stringify(products), true);
+    } catch(e){ alert('Could not save product data. Please try again.'); }
+  }
+
+  // ---------- edit mode ----------
+  $('edit-toggle').addEventListener('click', function(){
+    if (editMode) {
+      editMode = false;
+      renderAdminUI();
+      renderProducts();
+    } else {
+      $('password-error').classList.add('hidden');
+      $('password-input').value = '';
+      openModal('password-overlay');
+      setTimeout(function(){ $('password-input').focus(); }, 50);
+    }
+  });
+
+  $('password-submit').addEventListener('click', submitPassword);
+  $('password-input').addEventListener('keydown', function(e){ if (e.key === 'Enter') submitPassword(); });
+
+  function submitPassword(){
+    if ($('password-input').value === EDIT_PASSWORD) {
+      editMode = true;
+      closeModal('password-overlay');
+      renderAdminUI();
+      renderProducts();
+    } else {
+      $('password-error').classList.remove('hidden');
+    }
+  }
+
+  // ---------- site content modal ----------
+  document.querySelector('[data-role="edit-site"]').addEventListener('click', function(){
+    $('input-name').value = content.name;
+    $('input-tagline').value = content.tagline;
+    $('input-role').value = content.role;
+    for (var i=0;i<5;i++) $('input-f'+i).value = content.features[i] || '';
+    openModal('content-overlay');
+  });
+
+  $('content-save').addEventListener('click', async function(){
+    content.name = $('input-name').value.trim() || defaultContent.name;
+    content.tagline = $('input-tagline').value.trim();
+    content.role = $('input-role').value.trim();
+    content.features = [0,1,2,3,4].map(function(i){ return $('input-f'+i).value.trim(); });
+    renderContent();
+    closeModal('content-overlay');
+    await saveContent();
+  });
+
+  // ---------- product modal ----------
+  $('add-product-btn').addEventListener('click', function(){ openProductModal(null); });
+
+  function openProductModal(p){
+    editingProductId = p ? p.id : null;
+    pendingImageData = p ? p.image : null;
+    $('product-modal-title').textContent = p ? 'Edit product' : 'Add product';
+    $('input-p-name').value = p ? (p.name || '') : '';
+    $('input-p-price').value = p ? (p.price || '') : '';
+    $('input-p-details').value = p ? (p.details || '') : '';
+    $('input-image').value = '';
+    if (p && p.image) {
+      $('image-preview').src = p.image;
+      $('image-preview').classList.remove('hidden');
+    } else {
+      $('image-preview').classList.add('hidden');
+    }
+    openModal('product-overlay');
+  }
+
+  $('input-image').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      var img = new Image();
+      img.onload = function(){
+        var maxW = 1000;
+        var scale = Math.min(1, maxW / img.width);
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        pendingImageData = canvas.toDataURL('image/jpeg', 0.82);
+        $('image-preview').src = pendingImageData;
+        $('image-preview').classList.remove('hidden');
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  $('product-save').addEventListener('click', async function(){
+    var name = $('input-p-name').value.trim();
+    if (!name) { alert('Please enter a product name.'); return; }
+    var data = {
+      id: editingProductId || (Date.now().toString(36) + Math.random().toString(36).slice(2,6)),
+      name: name,
+      price: $('input-p-price').value.trim(),
+      details: $('input-p-details').value.trim(),
+      image: pendingImageData
+    };
+    if (editingProductId) {
+      products = products.map(function(p){ return p.id === editingProductId ? data : p; });
+    } else {
+      products.push(data);
+    }
+    renderProducts();
+    closeModal('product-overlay');
+    await saveProducts();
+  });
+
+  async function deleteProduct(id){
+    if (!confirm('Delete this product?')) return;
+    products = products.filter(function(p){ return p.id !== id; });
+    renderProducts();
+    await saveProducts();
+  }
+
+  $('year').textContent = new Date().getFullYear();
+  renderAdminUI();
+  loadData();
+})();
+</script>
+</body>
+</html>
