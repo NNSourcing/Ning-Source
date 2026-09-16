@@ -544,6 +544,7 @@
       products.push(data);
     }
     renderProducts();
+    await saveProduct()
     closeModal('product-overlay');
     await saveProducts();
   });
