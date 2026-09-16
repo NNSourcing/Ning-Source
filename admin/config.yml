@@ -6,12 +6,93 @@ media_folder: "images"
 public_folder: "/images"
 
 collections:
-  - name: "pages"
-    label: "Pages"
+
+  - name: "settings"
+    label: "Site Settings"
     files:
-      - file: "index.html"
-        label: "Home Page"
-        name: "index"
+
+      - file: "content/settings.yml"
+        label: "Website Settings"
+        name: "settings"
+
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "code", default_language: "html" }
+
+          - label: "Site Name"
+            name: "name"
+            widget: "string"
+
+          - label: "Tagline"
+            name: "tagline"
+            widget: "string"
+
+          - label: "Role Description"
+            name: "role"
+            widget: "text"
+
+          - label: "Features"
+            name: "features"
+            widget: "list"
+            max: 5
+            fields:
+              - label: "Feature"
+                name: "text"
+                widget: "string"
+
+
+  - name: "products"
+    label: "Products"
+    folder: "content/products"
+    create: true
+    extension: "yml"
+    format: "yaml"
+    identifier_field: "name"
+
+    fields:
+
+      - label: "Product Name"
+        name: "name"
+        widget: "string"
+
+      - label: "Product Image"
+        name: "image"
+        widget: "image"
+
+      - label: "Price"
+        name: "price"
+        widget: "string"
+        required: false
+
+      - label: "Material"
+        name: "material"
+        widget: "string"
+        required: false
+
+      - label: "Size"
+        name: "size"
+        widget: "string"
+        required: false
+
+      - label: "GSM"
+        name: "gsm"
+        widget: "string"
+        required: false
+
+      - label: "MOQ"
+        name: "moq"
+        widget: "string"
+        required: false
+
+      - label: "Colors"
+        name: "colors"
+        widget: "string"
+        required: false
+
+      - label: "Packaging"
+        name: "packaging"
+        widget: "string"
+        required: false
+
+      - label: "Details"
+        name: "details"
+        widget: "text"
+        required: false
