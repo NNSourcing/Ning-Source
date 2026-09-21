@@ -1,5 +1,6 @@
 backend:
-  name: NNSourcing/Ning-Source
+  name: github
+  repo: NNSourcing/Ning-Source
   branch: main
 
 media_folder: "images"
