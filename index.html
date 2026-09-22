@@ -406,36 +406,57 @@
     $('edit-toggle').textContent = editMode ? 'Exit edit mode' : 'Edit site';
   }
 
-  // ---------- storage ----------
+    // ---------- load data from YAML ----------
   async function loadData(){
-  try {
-    const settingsRes = await fetch('./content/settings.yml');
-    const settingsText = await settingsRes.text();
-    const settings = jsyaml.load(settingsText);
+    try {
+      // Load website settings
+      const settingsRes = await fetch('./content/settings.yml');
+      const settingsText = await settingsRes.text();
+      const settings = jsyaml.load(settingsText);
 
-    if (settings) {
-      content = settings;
+      if (settings) {
+        content = settings;
+      }
+
+      // Load all products from GitHub repository
+      const productsRes = await fetch(
+        'https://api.github.com/repos/NNSourcing/Ning-Source/contents/content/products'
+      );
+
+      if (!productsRes.ok) {
+        throw new Error('Could not load product list');
+      }
+
+      const files = await productsRes.json();
+
+      const yamlFiles = files.filter(function(file){
+        return file.name.endsWith('.yml') || file.name.endsWith('.yaml');
+      });
+
+      products = await Promise.all(
+        yamlFiles.map(async function(file){
+          const res = await fetch(file.download_url);
+          const text = await res.text();
+          const product = jsyaml.load(text);
+
+          return {
+            id: file.name,
+            name: product.name || '',
+            price: product.price || '',
+            details: product.details || '',
+            image: product.image || ''
+          };
+        })
+      );
+
+    } catch(e) {
+      console.error('Could not load website data:', e);
+      products = [];
     }
-  } catch(e) {
-    console.log('Could not load settings:', e);
-  }
 
-  renderContent();
-  renderProducts();
-  $('loading-state').classList.add('hidden');
-}
-  }
-
-  async function saveContent(){
-    try {
-      await window.storage.set('site-content', JSON.stringify(content), true);
-    } catch(e){ alert('Could not save page text. Please try again.'); }
-  }
-
-  async function saveProducts(){
-    try {
-      await window.storage.set('products', JSON.stringify(products), true);
-    } catch(e){ alert('Could not save product data. Please try again.'); }
+    renderContent();
+    renderProducts();
+    $('loading-state').classList.add('hidden');
   }
 
   // ---------- edit mode ----------
