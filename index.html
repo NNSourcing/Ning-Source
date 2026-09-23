@@ -349,53 +349,7 @@
 });
   }
 
-  
-    meta.className = 'meta';
-
-    var name = document.createElement('p');
-    name.className = 'name';
-    name.textContent = p.name || 'Untitled';
-    meta.appendChild(name);
-
-    if (p.price) {
-      var price = document.createElement('p');
-      price.className = 'price';
-      price.textContent = p.price;
-      meta.appendChild(price);
-    }
-
-    var specs = [
-      ['Material', p.material],
-      ['Size', p.size],
-      ['GSM', p.gsm],
-      ['MOQ', p.moq],
-      ['Color', p.color],
-      ['Packaging', p.packaging]
-    ];
-
-    specs.forEach(function(item){
-      if (item[1]) {
-        var row = document.createElement('p');
-        row.className = 'details';
-        row.innerHTML = '<strong>' + item[0] + ':</strong> ' + item[1];
-        meta.appendChild(row);
-      }
-    });
-
-    if (p.details) {
-      var details = document.createElement('p');
-      details.className = 'details';
-      details.textContent = p.details;
-      meta.appendChild(details);
-    }
-
-    card.appendChild(meta);
-    grid.appendChild(card);
-  });
-}
-      }
-
-      var meta = document.createElement('div');
+   var meta = document.createElement('div');
       meta.className = 'meta';
       var name = document.createElement('p');
       name.className = 'name';
