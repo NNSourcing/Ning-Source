@@ -335,13 +335,21 @@
     var list = $('features-list');
     list.innerHTML = '';
     content.features.filter(Boolean).forEach(function(f){
-      var li = document.createElement('li');
-      li.textContent = f;
-      list.appendChild(li);
-    });
+  var li = document.createElement('li');
+
+  if (typeof f === 'object' && f !== null) {
+    li.textContent = f.text || f.label || f.name || '';
+  } else {
+    li.textContent = f;
   }
 
-  function renderProducts(){
+  if (li.textContent) {
+    list.appendChild(li);
+  }
+});
+  }
+
+  s(){
     var grid = $('product-grid');
     grid.innerHTML = '';
     $('empty-state').classList.toggle('hidden', products.length > 0);
@@ -351,33 +359,105 @@
 
       var img;
       if (p.image) {
-        img = document.createElement('img');
-        img.className = 'thumb';
-        img.src = p.image;
-        img.alt = p.name || 'Towel product';
-      } else {
-        img = document.createElement('div');
-        img.className = 'thumb placeholder';
-        img.textContent = 'No photo';
-      }
-      card.appendChild(img);
+        function renderProducts(){
+  var grid = $('product-grid');
+  grid.innerHTML = '';
+  $('empty-state').classList.toggle('hidden', products.length > 0);
 
-      if (editMode) {
-        var admin = document.createElement('div');
-        admin.className = 'card-admin';
-        var editBtn = document.createElement('button');
-        editBtn.className = 'icon-btn';
-        editBtn.title = 'Edit';
-        editBtn.textContent = '✎';
-        editBtn.addEventListener('click', function(){ openProductModal(p); });
-        var delBtn = document.createElement('button');
-        delBtn.className = 'icon-btn';
-        delBtn.title = 'Delete';
-        delBtn.textContent = '✕';
-        delBtn.addEventListener('click', function(){ deleteProduct(p.id); });
-        admin.appendChild(editBtn);
-        admin.appendChild(delBtn);
-        card.appendChild(admin);
+  products.forEach(function(p){
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var img;
+    if (p.image) {
+      img = document.createElement('img');
+      img.className = 'thumb';
+      img.src = p.image;
+      img.alt = p.name || 'Towel product';
+
+      // 点击图片放大
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function(){
+        window.open(p.image, '_blank');
+      });
+
+    } else {
+      img = document.createElement('div');
+      img.className = 'thumb placeholder';
+      img.textContent = 'No photo';
+    }
+
+    card.appendChild(img);
+
+    if (editMode) {
+      var admin = document.createElement('div');
+      admin.className = 'card-admin';
+
+      var editBtn = document.createElement('button');
+      editBtn.className = 'icon-btn';
+      editBtn.title = 'Edit';
+      editBtn.textContent = '✎';
+      editBtn.addEventListener('click', function(){
+        openProductModal(p);
+      });
+
+      var delBtn = document.createElement('button');
+      delBtn.className = 'icon-btn';
+      delBtn.title = 'Delete';
+      delBtn.textContent = '✕';
+      delBtn.addEventListener('click', function(){
+        deleteProduct(p.id);
+      });
+
+      admin.appendChild(editBtn);
+      admin.appendChild(delBtn);
+      card.appendChild(admin);
+    }
+
+    var meta = document.createElement('div');
+    meta.className = 'meta';
+
+    var name = document.createElement('p');
+    name.className = 'name';
+    name.textContent = p.name || 'Untitled';
+    meta.appendChild(name);
+
+    if (p.price) {
+      var price = document.createElement('p');
+      price.className = 'price';
+      price.textContent = p.price;
+      meta.appendChild(price);
+    }
+
+    var specs = [
+      ['Material', p.material],
+      ['Size', p.size],
+      ['GSM', p.gsm],
+      ['MOQ', p.moq],
+      ['Color', p.color],
+      ['Packaging', p.packaging]
+    ];
+
+    specs.forEach(function(item){
+      if (item[1]) {
+        var row = document.createElement('p');
+        row.className = 'details';
+        row.innerHTML = '<strong>' + item[0] + ':</strong> ' + item[1];
+        meta.appendChild(row);
+      }
+    });
+
+    if (p.details) {
+      var details = document.createElement('p');
+      details.className = 'details';
+      details.textContent = p.details;
+      meta.appendChild(details);
+    }
+
+    card.appendChild(meta);
+    grid.appendChild(card);
+  });
+}
       }
 
       var meta = document.createElement('div');
@@ -552,12 +632,17 @@
   $('product-save').addEventListener('click', async function(){
     var name = $('input-p-name').value.trim();
     if (!name) { alert('Please enter a product name.'); return; }
-    var data = {
-      id: editingProductId || (Date.now().toString(36) + Math.random().toString(36).slice(2,6)),
-      name: name,
-      price: $('input-p-price').value.trim(),
-      details: $('input-p-details').value.trim(),
-      image: pendingImageData
+    id: file.name,
+  name: product.name || '',
+  price: product.price || '',
+  details: product.details || '',
+  material: product.material || '',
+  size: product.size || '',
+  gsm: product.gsm || '',
+  moq: product.moq || '',
+  color: product.color || '',
+  packaging: product.packaging || '',
+  image: product.image || ''
     };
     if (editingProductId) {
       products = products.map(function(p){ return p.id === editingProductId ? data : p; });
