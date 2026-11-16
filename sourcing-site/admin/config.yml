@@ -1,0 +1,52 @@
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME   # 改成你的仓库
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "site"
+    label: "Website content"
+    files:
+      - name: "main"
+        label: "Homepage"
+        file: "content/site.json"
+        fields:
+          - {label: "Brand name", name: "brand", widget: "string"}
+          - {label: "Hero title", name: "hero_title", widget: "string"}
+          - {label: "Hero text", name: "hero_sub", widget: "text"}
+          - {label: "Button text", name: "cta_text", widget: "string"}
+          - {label: "Contact email", name: "contact_email", widget: "string"}
+          - {label: "Sample report title", name: "sample_title", widget: "string"}
+          - label: "Sample report rows"
+            name: "sample"
+            widget: "list"
+            fields:
+              - {label: "Item", name: "label", widget: "string"}
+              - {label: "Result", name: "result", widget: "string"}
+              - {label: "Status", name: "status", widget: "select", options: ["ok", "warn"]}
+          - {label: "Who it is for", name: "audience", widget: "list", field: {label: "Audience", name: "a", widget: "string"}}
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "body", widget: "text"}
+              - {label: "Phase", name: "phase", widget: "select", options: ["Available now", "On request", "Coming soon"]}
+              - {label: "Price", name: "price", widget: "string"}
+          - label: "How it works"
+            name: "steps"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "body", widget: "string"}
+          - label: "FAQ"
+            name: "faq"
+            widget: "list"
+            fields:
+              - {label: "Question", name: "q", widget: "string"}
+              - {label: "Answer", name: "a", widget: "text"}

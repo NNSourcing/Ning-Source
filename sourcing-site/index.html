@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChinaCheck – Verify Chinese suppliers before you buy</title>
+<meta name="description" content="Supplier verification, sample testing and product comparison for overseas hotels, gyms, spas and wholesalers buying from China.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f3;--surface:#fff;--ink:#14201c;--mute:#55635d;--line:#cbd5d0;--ok:#0f7b5f;--warn:#b8700f;--ok-bg:#e1f2ec;--warn-bg:#fbefd9;
+--h:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--b:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--surface:#17211d;--ink:#e8efeb;--mute:#9fb0a8;--line:#2c3b35;--ok:#4cc9a0;--warn:#e2a24a;--ok-bg:#16322a;--warn-bg:#36290f}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--b)}
+a{color:inherit}h1,h2,h3{font-family:var(--h);line-height:1.1;margin:0}
+.w{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0}
+.logo{font:700 1.3rem var(--h);text-decoration:none}
+.btn{display:inline-block;background:var(--ok);color:#fff;font-weight:600;padding:.8rem 1.3rem;border-radius:6px;text-decoration:none;border:0;font-size:1rem;cursor:pointer}
+@media(prefers-color-scheme:dark){.btn{color:#0f1714}}
+.btn:hover{filter:brightness(1.08)}
+:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.hero{display:grid;gap:2.5rem;padding:3rem 0 4rem;align-items:center}
+@media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);letter-spacing:-.02em}
+.hero p{color:var(--mute);font-size:1.15rem;max-width:34rem;margin:1.2rem 0 1.8rem}
+.report{background:var(--surface);border:2px solid var(--ink);border-radius:4px;padding:1.3rem;transform:rotate(1.2deg);box-shadow:6px 6px 0 var(--ok)}
+.report h3{font-size:1.05rem;margin-bottom:.8rem;padding-bottom:.7rem;border-bottom:1px dashed var(--line)}
+.row{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.97rem}
+.row:last-child{border:0;font-weight:600}
+.tag{font-weight:600;padding:.05rem .55rem;border-radius:99px;font-size:.88rem;text-align:right}
+.ok{background:var(--ok-bg);color:var(--ok)}.warn{background:var(--warn-bg);color:var(--warn)}
+section{padding:3.5rem 0;border-top:1px solid var(--line)}
+section>.w>h2{font-size:clamp(1.7rem,3.5vw,2.3rem);margin-bottom:1.6rem}
+.grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+.cell{background:var(--bg);padding:1.4rem}
+.cell h3{font-size:1.2rem;margin-bottom:.5rem}.cell p{margin:0;color:var(--mute)}
+.meta{display:flex;justify-content:space-between;margin-top:1rem;font-size:.9rem;font-weight:600}
+.meta .live{color:var(--ok)}.meta .soon{color:var(--mute)}
+.steps{counter-reset:s;display:grid;gap:1.2rem;padding:0;list-style:none;margin:0}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.steps li{counter-increment:s;border-top:4px solid var(--ok);padding-top:.8rem}
+.steps li::before{content:counter(s);font:700 1.6rem var(--h);color:var(--ok)}
+.steps h3{font-size:1.1rem;margin:.2rem 0 .4rem}.steps p{margin:0;color:var(--mute);font-size:.97rem}
+ul.aud{columns:2 18rem;padding-left:1.2rem;margin:0}ul.aud li{margin-bottom:.6rem}
+details{border-bottom:1px solid var(--line);padding:1rem 0}summary{cursor:pointer;font-weight:600}details p{color:var(--mute);margin:.6rem 0 0}
+form{display:grid;gap:1rem;max-width:36rem}
+label{display:grid;gap:.3rem;font-weight:600;font-size:.95rem}
+input,select,textarea{font:inherit;padding:.7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+footer{padding:2rem 0;border-top:1px solid var(--line);color:var(--mute);font-size:.9rem}
+.hp{display:none}
+</style>
+</head>
+<body>
+<div class="w">
+<header><a class="logo" href="/" id="brand">ChinaCheck</a><a class="btn" href="#request" id="nav-cta">Request a check</a></header>
+<div class="hero">
+  <div><h1 id="hero-title"></h1><p id="hero-sub"></p><a class="btn" href="#request" id="hero-cta"></a></div>
+  <div class="report" aria-label="Sample verification report"><h3 id="sample-title"></h3><div id="sample"></div></div>
+</div>
+</div>
+
+<section><div class="w"><h2>What we do</h2><div class="grid three" id="services"></div></div></section>
+<section><div class="w"><h2>How it works</h2><ol class="steps" id="steps"></ol></div></section>
+<section><div class="w"><h2>Who it is for</h2><ul class="aud" id="audience"></ul></div></section>
+<section><div class="w"><h2>Questions</h2><div id="faq"></div></div></section>
+
+<section id="request"><div class="w"><h2>Request a supplier check</h2>
+<form name="request" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="request">
+  <p class="hp"><label>Leave empty <input name="bot-field"></label></p>
+  <label>Your name <input name="name" required autocomplete="name"></label>
+  <label>Email <input type="email" name="email" required autocomplete="email"></label>
+  <label>Company and business type <input name="company" placeholder="e.g. 40-room hotel, Dubai" required></label>
+  <label>What do you need? <select name="service"><option>Supplier verification</option><option>Product comparison</option><option>Sample testing</option><option>Factory audit</option><option>Full sourcing service</option><option>Not sure yet</option></select></label>
+  <label>Supplier link, contact or product <textarea name="details" rows="4" required placeholder="Paste a link, WeChat ID, quote or product description"></textarea></label>
+  <label>Expected order value <select name="budget"><option>Under $5,000</option><option>$5,000–$20,000</option><option>$20,000–$100,000</option><option>Over $100,000</option></select></label>
+  <button class="btn" type="submit">Send request</button>
+</form></div></section>
+
+<footer><div class="w">© <span id="year"></span> <span id="brand2"></span>. We are paid by buyers only and take no commission from suppliers. Reports describe what we could verify at the time and are not a guarantee.</div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+fetch("/content/site.json").then(r=>r.json()).then(d=>{
+  document.title=d.brand+" – Verify Chinese suppliers before you buy";
+  $("brand").textContent=d.brand;$("brand2").textContent=d.brand;$("year").textContent=new Date().getFullYear();
+  $("hero-title").textContent=d.hero_title;$("hero-sub").textContent=d.hero_sub;
+  $("hero-cta").textContent=d.cta_text;$("nav-cta").textContent=d.cta_text;
+  $("sample-title").textContent=d.sample_title;
+  $("sample").innerHTML=(d.sample||[]).map(r=>`<div class="row"><span>${esc(r.label)}</span><span class="tag ${r.status==="ok"?"ok":"warn"}">${esc(r.result)}</span></div>`).join("");
+  $("services").innerHTML=(d.services||[]).map(s=>`<div class="cell"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p><div class="meta"><span class="${s.phase==="Coming soon"?"soon":"live"}">${esc(s.phase)}</span><span>${esc(s.price)}</span></div></div>`).join("");
+  $("steps").innerHTML=(d.steps||[]).map(s=>`<li><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></li>`).join("");
+  $("audience").innerHTML=(d.audience||[]).map(a=>`<li>${esc(typeof a==="string"?a:a.a)}</li>`).join("");
+  $("faq").innerHTML=(d.faq||[]).map(f=>`<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
+}).catch(()=>{$("hero-title").textContent="Verify Chinese suppliers before you buy."});
+</script>
+</body>
+</html>

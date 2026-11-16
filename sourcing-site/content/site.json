@@ -1,0 +1,41 @@
+{
+  "brand": "ChinaCheck",
+  "hero_title": "Know the supplier before you wire the deposit.",
+  "hero_sub": "We verify Chinese suppliers, test samples and compare products for hotels, guesthouses, gyms, spas and wholesalers buying from China, so your first big order is an informed one.",
+  "cta_text": "Request a supplier check",
+  "contact_email": "hello@example.com",
+  "sample_title": "Sample report: bedding supplier, Zhejiang",
+  "sample": [
+    {"label": "Business license", "result": "Verified", "status": "ok"},
+    {"label": "Factory address", "result": "Matched on site", "status": "ok"},
+    {"label": "Production capacity", "result": "Claimed 3x actual", "status": "warn"},
+    {"label": "Sample vs. your spec", "result": "2 of 14 tests failed", "status": "warn"},
+    {"label": "Overall risk", "result": "Medium", "status": "warn"}
+  ],
+  "audience": [
+    "Hotels and guesthouses buying linens, amenities and furniture",
+    "Gyms and spas buying equipment, towels and consumables",
+    "Wholesalers and small importers sourcing from China for the first time",
+    "Companies with no buying team in China"
+  ],
+  "services": [
+    {"title": "Supplier verification", "body": "Business registration, export history, factory address and ownership checked against Chinese public records, with a video or on-site visit where needed.", "phase": "Available now", "price": "From $99"},
+    {"title": "Product comparison", "body": "Two to five quotes lined up side by side: materials, specs, certificates and why one costs half of another.", "phase": "Available now", "price": "From $149"},
+    {"title": "Sample testing", "body": "We receive samples, test them against your spec and send photos, measurements and a pass/fail report.", "phase": "Available now", "price": "From $199"},
+    {"title": "Factory audit", "body": "An inspector visits, checks equipment, workers, process and stock, and reports back with photos.", "phase": "On request", "price": "Quote"},
+    {"title": "Negotiation and ordering", "body": "We request quotes, negotiate price and terms, and prepare the purchase contract.", "phase": "Coming soon", "price": "Quote"},
+    {"title": "QC, production and shipping", "body": "Pre-shipment inspection, production follow-up, consolidation and freight to your door.", "phase": "Coming soon", "price": "Quote"}
+  ],
+  "steps": [
+    {"title": "Send us the supplier or product", "body": "A link, a quote or a WeChat contact is enough."},
+    {"title": "We research and verify", "body": "Records, calls, samples and visits, depending on the package."},
+    {"title": "You get a clear report", "body": "Evidence, a risk rating and a plain recommendation."},
+    {"title": "Decide, or let us source", "body": "Order yourself, or hand us negotiation, QC and shipping."}
+  ],
+  "faq": [
+    {"q": "Are you affiliated with any supplier?", "a": "No. We are paid by buyers only and take no commission from factories."},
+    {"q": "Can you guarantee a supplier is safe?", "a": "No one can. We reduce risk by checking facts and tell you what we could not verify."},
+    {"q": "How long does a check take?", "a": "Supplier verification usually takes 3 to 5 business days. Sample testing depends on shipping time."},
+    {"q": "Do you speak the supplier's language?", "a": "Yes. Our team works in Chinese and English, and handles calls and documents with the supplier."}
+  ]
+}
